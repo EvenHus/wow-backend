@@ -64,3 +64,15 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
         return self.email
 
+
+class ProfileFeedItem(models.Model):
+    """Profile status update."""
+
+    user_profile = models.ForeignKey('UserProfile', on_delete=models.CASCADE)
+    status_text = models.CharField(max_length=225)
+    created_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        """Return the model as a string."""
+
+        return self.status_text
