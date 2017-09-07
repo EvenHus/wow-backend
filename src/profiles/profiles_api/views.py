@@ -69,8 +69,8 @@ class HelloViewSet(viewsets.ViewSet):
 
     serializer_class = serializers.HelloSerializer
 
-    def list(selfselft, request):
-        """Retur a hello message."""
+    def list(self, request):
+        """Return a hello message."""
 
         a_viewset = [
             'Uses actions (list, create, retrive, update, partial_update',
@@ -148,3 +148,16 @@ class UserProfileFeedViewSet(viewsets.ModelViewSet):
 
         serializer.save(user_profile=self.request.user)
 
+
+class FeedImageViewSet(viewsets.ModelViewSet):
+    """Handels creating, reading and updating images in feed."""
+
+    authentication_classes = (TokenAuthentication, )
+    serializer_class = serializers.FeedImageSerializer
+    queryset = models.ProfileFeedImage.objects.all()
+    permission_classes = (permissions.PostNewImage, IsAuthenticated)
+
+    def perform_create(self, serializer):
+        """Set the user profile to the logged in user."""
+
+        serializer.save(user_profile=self.request.user)

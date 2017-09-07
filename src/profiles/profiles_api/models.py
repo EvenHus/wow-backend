@@ -55,7 +55,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         return self.name
 
     def get_short_name(self):
-        """Used to get a users shot name."""
+        """Used to get a users short name."""
 
         return self.name
 
@@ -68,6 +68,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 class ProfileFeedItem(models.Model):
     """Profile status update."""
 
+    user_profile_image = models.ImageField(null=True)
     user_profile = models.ForeignKey('UserProfile', on_delete=models.CASCADE)
     status_text = models.CharField(max_length=225)
     created_on = models.DateTimeField(auto_now=True)
@@ -76,3 +77,17 @@ class ProfileFeedItem(models.Model):
         """Return the model as a string."""
 
         return self.status_text
+
+
+class ProfileFeedImage(models.Model):
+    """Add image to feed."""
+
+    image = models.ImageField(null=True)
+    image_text = models.CharField(max_length=225)
+    user_profile = models.ForeignKey('UserProfile', on_delete=models.CASCADE)
+    created_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        """Return the model as a string"""
+
+        return self.image_text

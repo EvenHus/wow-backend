@@ -23,3 +23,15 @@ class PostOwnStatus(permissions.BasePermission):
             return True
 
         return obj.user_profile.id == request.user.id
+
+
+class PostNewImage(permissions.BasePermission):
+    """Allow the user to post new image."""
+
+    def has_object_permission(self, request, view, obj):
+        """Checks if the user if trying to post a new image using their own profile."""
+
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        return obj.user_profile.id == request.user.id
